@@ -33,10 +33,14 @@ function AddTask () {
     }, [])
 
     function onSubmit(e) {
-        // e.preventDefault();
+        e.preventDefault();
         console.log(task)
         axios.post('https://line-pea.herokuapp.com/tasks/add', task)
-        .then( res => console.log(res.data))
+        .then( res => {
+            if(res.status === 200) {
+                setSuccess(true);
+            }
+        })
         .catch( err => console.log(err))
     }
 
@@ -46,11 +50,15 @@ function AddTask () {
             <div className="card-body">
                 <form onSubmit={onSubmit}>
                     <h2>มอบหมายงาน</h2>
+                    {success && <div className="alert alert-success">บันทึกงานเรื่อง {task.title} เรียบร้อย</div>}
                     <div className="form-group">
                         <label htmlFor="name">มอบหมายงานให้ : </label>
                         <select id="name" className="custom-select"
                         value={task.username}
-                        onChange={ (e) => setTask({...task, username: e.target.value})}
+                        onChange={ (e) => {
+                            setTask({...task, username: e.target.value});
+                            setSuccess(false);
+                        }}
                         >
                             {
                                 users.map( (user) => (
