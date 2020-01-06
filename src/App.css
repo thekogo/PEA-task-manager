@@ -1,0 +1,12 @@
+.labelSameLine {
+ display : inline;
+ padding-right : 4px;
+ color: red;
+}
+
+.selectSameLine {
+  margin-left: 4px;
+  margin-top : 4px;
+  margin-bottom : 1em;
+  width: 80%
+}
