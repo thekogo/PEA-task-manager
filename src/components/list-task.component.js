@@ -50,7 +50,7 @@ function ShowTask() {
             newTasks = newTasks.filter(task => task.status === 1)
         }
         setTasksed(newTasks)
-    }, [username, filter])
+    }, [tasks, filter])
 
     // Fetch users name
     useEffect( () => {
@@ -107,9 +107,9 @@ function ShowTask() {
                         }
                     </select>
                     <br/>
-                    <button className="btn mr-2" onClick={ () => setFilter({status: 3})}>งานทั้งหมด</button>
-                    <button className="btn mr-2" onClick={ () => setFilter({status: 1})}>งานที่เสร็จแล้ว</button>
-                    <button className="btn btn-secondary mr-2" onClick={ () => setFilter({status: 0})}>งานที่ยังไม่เสร็จ</button>
+                    <button className={filter.status === 2 ? "btn mr-2 btn-primary" : "btn mr-2 btn-secondary"} onClick={ () => setFilter({status: 2})}>งานทั้งหมด</button>
+                    <button className={filter.status === 1 ? "btn mr-2 btn-primary" : "btn mr-2 btn-secondary"} onClick={ () => setFilter({status: 1})}>งานที่เสร็จแล้ว</button>
+                    <button className={filter.status === 0 ? "btn mr-2 btn-primary" : "btn mr-2 btn-secondary"} onClick={ () => setFilter({status: 0})}>งานที่ยังไม่เสร็จ</button>
                     <br />
                     <br />
                     <table className="table table-striped">
