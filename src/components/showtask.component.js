@@ -19,6 +19,7 @@ function ShowTask() {
                     title: event.title,
                     description: event.description,
                     username: event.username,
+                    displayName: event.userdetials[0].displayname,
                     start: new Date(new Date(event.finish).setHours( 8,0,0,0 )),
                     end: new Date(new Date(event.finish).setHours( 17,0,0)),
                     finish: new Date(event.finish),

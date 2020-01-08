@@ -28,7 +28,7 @@ function EventAgenda({ event }) {
     <span>
       <em style={{ color: 'magenta' }}>{event.title}</em>
       <p>{event.description}</p>
-      <p>{`ผู้รับผิดชอบ : ${event.username}`}</p>
+      <p>{`ผู้รับผิดชอบ : ${event.displayName}`}</p>
       <p>{`กำหนดส่งงาน : ${formatDate(event.finish)}`}<br/>
       {`กำหนดเช็คงาน : ${formatDate(event.check)}`}
       </p>

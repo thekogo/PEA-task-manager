@@ -32,6 +32,10 @@ function AddTask () {
         })
     }, [])
 
+   useEffect( () => {
+        setSuccess(false);
+   }, [task])
+
     function onSubmit(e) {
         e.preventDefault();
         console.log(task)
@@ -55,10 +59,7 @@ function AddTask () {
                         <label htmlFor="name">มอบหมายงานให้ : </label>
                         <select id="name" className="custom-select"
                         value={task.username}
-                        onChange={ (e) => {
-                            setTask({...task, username: e.target.value});
-                            setSuccess(false);
-                        }}
+                        onChange={ (e) => setTask({...task, username: e.target.value})}
                         >
                             {
                                 users.map( (user) => (

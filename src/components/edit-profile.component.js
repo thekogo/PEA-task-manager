@@ -10,10 +10,11 @@ function EditProfile (props) {
         username: '',
         displayName:'',
         position:'',
+        gdrive:''
     });
 
     useEffect( () => {
-        axios.get('https://line-pea.herokuapp.com/users/')
+        axios.get('http://localhost:8080/users/')
         .then( (res) => {
             let usersTemp = res.data.map( (user) => (
                 {
@@ -28,7 +29,7 @@ function EditProfile (props) {
     }, [])
 
     useEffect( ()=> {
-        axios.get('https://line-pea.herokuapp.com/users/'+profile.username)
+        axios.get('http://localhost:8080/users/'+profile.username)
         .then( (res) => {
             let usersTemp = res.data.map( (user) => (
                 {
@@ -36,16 +37,21 @@ function EditProfile (props) {
                     username: user.username,
                     displayName: user.displayname,
                     position: user.position || '',
+                    gdrive: user.gdrive || '',
                 }
             ))
-            setProfile({...profile, id: usersTemp[0].id, username: usersTemp[0].username, displayName: usersTemp[0].displayName, position: usersTemp[0].position})
+            setProfile({...profile, id: usersTemp[0].id, username: usersTemp[0].username, displayName: usersTemp[0].displayName, position: usersTemp[0].position, gdrive: usersTemp[0].gdrive})
         })
     }, [profile.username])
+
+    useEffect( () => {
+        setSuccess(false);
+    }, [profile])
 
     function onSubmit(e) {
         console.log(profile.id)
         e.preventDefault();
-        axios.patch('https://line-pea.herokuapp.com/users/edit/'+profile.id, profile)
+        axios.patch('http://localhost:8080/users/edit/'+profile.id, profile)
         .then( res => {
             console.log(res)
             if(res.status === 200) {
@@ -69,10 +75,7 @@ function EditProfile (props) {
                             <label>แก้ไขข้อมูลของ : </label>
                             <select className="custom-select"
                             value={profile.username}
-                            onChange={ (e) => {
-                                setProfile({...profile, username: e.target.value});
-                                setSuccess(false)
-                            }}
+                            onChange={ (e) => setProfile({...profile, username: e.target.value})}
                             >
                                 {
                                     users.map( (user) => (
@@ -100,6 +103,13 @@ function EditProfile (props) {
                             <input className="form-control" type="text"
                                 value={profile.position}
                                 onChange={ (e) => setProfile({...profile, position: e.target.value})}
+                            />
+                        </div>
+                        <div className="form-group">
+                            <label>Google Drive</label>
+                            <input className="form-control" type="text"
+                                value={profile.gdrive}
+                                onChange={ (e) => setProfile({...profile, gdrive: e.target.value})}
                             />
                         </div>
                         <button className="btn btn-success float float-right" type="submit">Save</button>
