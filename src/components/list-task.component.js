@@ -12,6 +12,7 @@ function ShowTask() {
     const [tasksed, setTasksed] = useState([])
     const [username, setUsername] = useState('')
     const [users, setUsers] = useState([]);
+    const [deleted, setDeleted] = useState(false)
 
     // Fetch Tasks by username
     useEffect( () => {
@@ -75,16 +76,35 @@ function ShowTask() {
           "พฤศจิกายน", "ธันวาคม"
         ];
       
-        let day = date.getDate();
-        let monthIndex = date.getMonth();
-        let year = date.getFullYear();
+            let day = date.getDate();
+            let monthIndex = date.getMonth();
+            let year = date.getFullYear();
       
-        return day + ' ' + monthNames[monthIndex] + ' ' + year;
-      }
+            return day + ' ' + monthNames[monthIndex] + ' ' + year;
+        }
 
-      function editTask(e) {
-          console.log(e.target.value)
-      }
+        function editTask(e) {
+            console.log(e.target.value)
+        }
+
+        function deleteTask(e) {
+            const id = e.target.value
+            console.log(e.target.value)
+            axios.delete('https://line-pea.herokuapp.com/tasks/delete/' + id)
+            .then( (res) => {
+                console.log(res)
+                if(res.status === 200) {
+                    setDeleted(true);
+                    let newTasks = tasksed.filter( task => task.id !== id)
+                    setTasksed(newTasks)
+                    
+                }
+            })
+            .catch( (err) => {
+                console.log(err)
+                setDeleted(false)
+            })
+        }
 
     return (
         <div className="container">
@@ -94,6 +114,7 @@ function ShowTask() {
                    <h3>รายการงาน</h3>
                 </div>
                 <div className="card-body">
+                    {deleted && <div className="alert alert-success">ลบงานเรียบร้อย</div>}
                     <label htmlFor="username" className={style.labelSameLine}>ชื่อ : </label>
                     <select id="username" className="custom-select selectSameLine"
                     value={username}
@@ -133,8 +154,8 @@ function ShowTask() {
                                         <td>{task.status ? "เสร็จแล้ว" : "ยังไม่เสร็จ"}</td>
                                         <td key={task.displayName}>{task.displayName}</td>
                                         <td key={task.id}>
-                                            <button className="btn btn-warning" value={task.id} onClick={editTask}>แก้ไข</button>
-                                            <button className="btn btn-danger" value={task.id} onClick={editTask}>ลบ</button>
+                                            <a className="btn btn-warning" href={`/edittask/${task.id}`}>แก้ไข</a>
+                                            <button className="btn btn-danger" value={task.id} onClick={deleteTask}>ลบ</button>
                                         </td>
                                     </tr>
                                 ))

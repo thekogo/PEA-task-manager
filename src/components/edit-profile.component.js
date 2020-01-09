@@ -14,7 +14,7 @@ function EditProfile (props) {
     });
 
     useEffect( () => {
-        axios.get('http://localhost:8080/users/')
+        axios.get('https://line-pea.herokuapp.com/users/')
         .then( (res) => {
             let usersTemp = res.data.map( (user) => (
                 {
@@ -29,7 +29,7 @@ function EditProfile (props) {
     }, [])
 
     useEffect( ()=> {
-        axios.get('http://localhost:8080/users/'+profile.username)
+        axios.get('https://line-pea.herokuapp.com/users/'+profile.username)
         .then( (res) => {
             let usersTemp = res.data.map( (user) => (
                 {
@@ -51,7 +51,7 @@ function EditProfile (props) {
     function onSubmit(e) {
         console.log(profile.id)
         e.preventDefault();
-        axios.patch('http://localhost:8080/users/edit/'+profile.id, profile)
+        axios.patch('https://line-pea.herokuapp.com/users/edit/'+profile.id, profile)
         .then( res => {
             console.log(res)
             if(res.status === 200) {

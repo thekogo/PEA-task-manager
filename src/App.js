@@ -8,6 +8,7 @@ import MainMenu from './components/mainmenu.component'
 import TaskManager from './components/taskmanger.component'
 import ShowTask from './components/showtask.component'
 import EditProfile from './components/edit-profile.component'
+import EditTask from './components/edit-task.component'
 import ListTask from './components/list-task.component'
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
       <Route path='/taskmanager' component={TaskManager} />
       <Route path='/showtask' component={ShowTask} />
       <Route path='/editprofile' component={EditProfile} />
+      <Route path='/edittask/:id' component={EditTask} />
       <Route path='/listtask' component={ListTask} />
     </Router>
   );
